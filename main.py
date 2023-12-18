@@ -36,14 +36,9 @@ while len(guessed_list) < 50:
     else:
         print(f"{user_answer} does not exist.")
 
-for state in state_list:
-    if state not in guessed_list:
-        missing_states.append(state)
+missing_states = [state for state in state_list if state not in guessed_list]
 
-data_dict = {
-    "state": missing_states
-}
-states_to_find_data = pandas.DataFrame(data_dict)
+states_to_find_data = pandas.DataFrame(missing_states)
 states_to_find_data.to_csv("states_to_discover.csv")
 
 screen.exitonclick()
