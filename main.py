@@ -16,6 +16,7 @@ data = pandas.read_csv("50_states.csv")
 # May need to convert to list or dictionary to iterate and match user input.
 state_list = data.state.to_list()
 guessed_list = []
+missing_states = []
 
 title = "Guess the State"
 while len(guessed_list) < 50:
@@ -24,6 +25,8 @@ while len(guessed_list) < 50:
     x_cor = list(states.x)
     y_cor = list(states.y)
 
+    if user_answer == "Exit":
+        break
     if user_answer in guessed_list:
         print(f"{user_answer} already listed")
     elif user_answer in state_list:
@@ -33,11 +36,15 @@ while len(guessed_list) < 50:
     else:
         print(f"{user_answer} does not exist.")
 
+for state in state_list:
+    if state not in guessed_list:
+        missing_states.append(state)
+
+data_dict = {
+    "state": missing_states
+}
+states_to_find_data = pandas.DataFrame(data_dict)
+states_to_find_data.to_csv("states_to_discover.csv")
+
 screen.exitonclick()
-# def get_mouse_click_cor(x, y):
-#     print(x, y)
-#
-#
-# turtle.onscreenclick(get_mouse_click_cor)
-#
-# turtle.mainloop()
+
